@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // input with id username on change event
     const usernameInput = document.getElementById('username');
-    usernameInput.addEventListener('change', function () {
+    usernameInput.addEventListener('input', function () {
         const username = usernameInput.value;
 
         // add validation to username value to check whether it has at least one Capital Letter, 1 special character, 1 number and is at least 8 characters long
