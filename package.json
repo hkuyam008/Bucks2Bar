@@ -1,0 +1,26 @@
+{
+  "name": "bucks2bar",
+  "version": "1.0.0",
+  "description": "## Project Overview Bucks2Bar is a web project that utilizes Bootstrap for responsive design and custom styles to enhance the user experience. This project serves as a template for building modern web applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hkuyam008/Bucks2Bar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hkuyam008/Bucks2Bar/issues"
+  },
+  "homepage": "https://github.com/hkuyam008/Bucks2Bar#readme",
+  "devDependencies": {
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5"
+  }
+}
