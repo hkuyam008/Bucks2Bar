@@ -1,4 +1,40 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    // input with id username on change event
+    const usernameInput = document.getElementById('username');
+    usernameInput.addEventListener('change', function () {
+        const username = usernameInput.value;
+
+        // add validation to username value to check whether it has at least one Capital Letter, 1 special character, 1 number and is at least 8 characters long
+        const usernamePattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (usernamePattern.test(username)) {
+            localStorage.setItem('username', username);
+            usernameInput.classList.remove('is-invalid');
+            usernameInput.classList.add('is-valid');
+            let errorMessage = document.getElementById('usernameError');
+            if (errorMessage) {
+            errorMessage.remove();
+            }
+        } else {
+            usernameInput.classList.remove('is-valid');
+            usernameInput.classList.add('is-invalid');
+            let errorMessage = document.getElementById('usernameError');
+            if (!errorMessage) {
+            errorMessage = document.createElement('div');
+            errorMessage.id = 'usernameError';
+            errorMessage.style.color = 'red';
+            usernameInput.parentNode.insertBefore(errorMessage, usernameInput.nextSibling);
+            }
+            errorMessage.textContent = "Username must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character.";
+        }
+
+        // if (username) {
+        //     localStorage.setItem('username', username);
+        // } else {
+        //     localStorage.removeItem('username');
+        // }
+    });    
+
     const ctx = document.getElementById('barChart').getContext('2d');
     window.barChart = new Chart(ctx, { // Make barChart globally accessible
         type: 'bar',
