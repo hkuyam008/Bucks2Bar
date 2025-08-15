@@ -36,6 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
+    const downloadButton = document.getElementById('downloadChartBtn');
+    downloadButton.addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.href = barChart.toBase64Image();
+        link.download = 'chart.png';
+        link.click();
+    });
 });
 
 function updateChart() {
