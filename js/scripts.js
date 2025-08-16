@@ -81,7 +81,27 @@ document.addEventListener("DOMContentLoaded", () => {
         link.download = 'chart.png';
         link.click();
     });
+
+    const months = [
+        'january', 'february', 'march', 'april', 'may', 'june',
+        'july', 'august', 'september', 'october', 'november', 'december'
+    ];
+
+    months.forEach(month => {
+        const incomeInput = document.getElementById(`${month}-income`);
+        const expensesInput = document.getElementById(`${month}-expenses`);
+
+        if (incomeInput && expensesInput) {
+            const expenses = Math.floor(Math.random() * (800 - 200 + 1)) + 200; // Random value between 200 and 800
+            const income = Math.floor(Math.random() * (1000 - (expenses + 1) + 1)) + (expenses + 1); // Greater than expenses
+
+            incomeInput.value = income;
+            expensesInput.value = expenses;
+        }
+    });
 });
+
+
 
 // Update Chart Data
 const updateChart = () => {
