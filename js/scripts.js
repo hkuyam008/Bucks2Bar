@@ -82,6 +82,42 @@ document.addEventListener("DOMContentLoaded", () => {
         link.click();
     });
 
+    document.getElementById('sendEmailBtn')?.addEventListener('click', async () => {
+        if (window.barChart) {
+            const chartImage = barChart.toBase64Image(); // Get chart as Base64 image
+            const emailInput = document.getElementById('email-address');
+            const email = emailInput?.value || '';
+            console.log('Email:', email); // Log the email for debugging
+            if (email) {
+                try {
+                    const response = await fetch('http://localhost:3000/send-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            chartImage: chartImage,
+                        }),
+                    });
+
+                    if (response.ok) {
+                        alert('Email sent successfully!');
+                    } else {
+                        alert('Failed to send email. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error sending email:', error);
+                    alert('An error occurred. Please try again later.');
+                }
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        } else {
+            alert('Chart is not available.');
+        }
+    });
+
     const months = [
         'january', 'february', 'march', 'april', 'may', 'june',
         'july', 'august', 'september', 'october', 'november', 'december'

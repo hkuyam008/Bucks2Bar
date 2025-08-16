@@ -291,7 +291,16 @@
                 <canvas id="barChart" width="400" height="200"></canvas>
                 <!-- a plain Bootstrap button with the label "Download" -->
                 <div class="text-center mt-3">
-                    <button class="btn btn-primary" id="downloadChartBtn">Download Chart</button>
+                    <button class="btn btn-primary mb-3" id="downloadChartBtn">Download Chart</button>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <input type="email" class="form-control" id="email-address" placeholder="Enter your email" aria-label="Email" aria-describedby="email-label">
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-primary w-100" id="sendEmailBtn">Send Email</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
