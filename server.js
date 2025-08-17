@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors'); // Import the cors package
 const nodemailer = require('nodemailer');
+const rateLimit = require('express-rate-limit');
+require('dotenv').config();
+
 const app = express();
 
 // Enable CORS for all origins or specify allowed origins
@@ -14,12 +17,25 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' })); // Adjust the limit as needed
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-app.post('/send-email', async (req, res) => {
+// Rate limiter for email endpoint
+const emailRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // Limit each IP to 10 requests per windowMs
+    message: 'Too many email requests from this IP, please try again later.',
+});
+
+app.post('/send-email', emailRateLimiter, async (req, res) => {
     console.log('Received request to send email');
     const { email, chartImage } = req.body;
 
-    if (!email || !chartImage) {
-        return res.status(400).send('Email and chart image are required.');
+    // Validate email and chartImage
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        return res.status(400).send('Invalid email address.');
+    }
+
+    if (!chartImage || !chartImage.startsWith('data:image/')) {
+        return res.status(400).send('Invalid chart image.');
     }
 
     try {
@@ -28,8 +44,8 @@ app.post('/send-email', async (req, res) => {
             port: 587, // Use 587 for TLS or 465 for SSL
             secure: false, // Set to true if using port 465
             auth: {
-                user: 'resend', // Replace with your SMTP username
-                pass: '', // Replace with your SMTP password
+                user: process.env.SMTP_USER, // Use environment variable
+                pass: process.env.SMTP_PASS, // Use environment variable
             },
         });
 
